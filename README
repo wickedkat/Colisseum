@@ -1,0 +1,10 @@
+Colisseum app - basic version.
+
+1.I've changed the rule for defining chance of attack: now its CurrentDEX (BaseDEX *LVL) as % of chance of attack (testing purposes).
+2.ListNames as private field in Gladiator class  = I'm not convinced that it's efficient, as the entire list has to be created
+    every time I make an instance of Gladiator, but I was told by one of the mentors, while checking Car Race assignment, that was the way.
+    Initially, I would have put it in Tournament class, to create that list just once per tournament.
+3.No additional features implemented (yet?) - I quite know how to implement all of them. They won't change the app structure anyway, and that's what
+  was the most important for me to get right.
+4. Method getGladiatorType in Gladiator subclasses - I know there's a getClass method, not using it was just easier as I didn't have to get rid of the word in
+   return product"class".

@@ -11,20 +11,14 @@ public class Tournament {
         this.stages = stages;
     }
 
-    public void createStages(int stages) {
-        List<Combat> firstStageList = new ArrayList<>();
+    public void createAndExecuteCombats(int stages) {
         System.out.println("COMBATS STAGE 1");
         System.out.println("");
+        List<Combat> firstStageList = new ArrayList<>();
         double stageCombats = Math.pow(2, stages - 1);
         createFirstStageCombats(allGladiators, firstStageList, stageCombats);
         allCombats.add(firstStageList);
-        int combatNumber = 1;
-        for (Combat combat : firstStageList
-        ) {
-            combat.simulateCombat(combat, combatNumber);
-            combatNumber += 1;
-
-        }
+        executeCombats(firstStageList);
         stageCombats /= 2;
         for (int i = 1; i < stages; i++) {
             System.out.println(" ");
@@ -33,22 +27,11 @@ public class Tournament {
             List<Combat> stageList = new ArrayList<>();
             createStageCombats(stageCombats, stageList, createWinnersList());
             allCombats.add(stageList);
-            combatNumber = 1;
-
-            for (Combat combat : stageList
-            ) {
-                combat.simulateCombat(combat, combatNumber);
-                combatNumber += 1;
-
-            }
-
+            executeCombats(stageList);
             if (stageCombats > 1) {
                 stageCombats /= 2;
             }
-
         }
-
-
     }
 
     public void createFirstStageCombats(List<Gladiator> allGladiators, List<Combat> stageList, double stageCombats) {
@@ -58,7 +41,6 @@ public class Tournament {
             if (j < allGladiators.size()) {
                 j += 2;
             }
-
 
         }
 
@@ -71,6 +53,16 @@ public class Tournament {
             if (j < winnersList.size()) {
                 j += 2;
             }
+        }
+    }
+
+    public void executeCombats(List<Combat> stagelist){
+        int combatNumber = 1;
+        for (Combat combat : stagelist
+        ) {
+            combat.simulateCombat(combat, combatNumber);
+            combatNumber += 1;
+
         }
     }
 
@@ -92,7 +84,6 @@ public class Tournament {
                     allGladiators.add(new Brutal());
                     break;
             }
-
         }
         printGladiators(this);
     }
@@ -114,7 +105,7 @@ public class Tournament {
 
     public void simulateTournament(int stages) {
         createGladiators();
-        createStages(stages);
+        createAndExecuteCombats(stages);
         printTheWinner(createWinnersList());
 
     }

@@ -36,16 +36,21 @@ public class Combat {
             double dmg = Math.floor(damageMultiplier * activeGladiator.getCurrentSP());
             passiveGladiator.setCombatHP(passiveGladiator.getCombatHP() - dmg);
             System.out.println(activeGladiator.getName() + " attacks at " + dmg + " dmg.");
-            if (passiveGladiator.getCombatHP() <= 0) {
-                activeGladiator.setWinner(true);
-                passiveGladiator.setWinner(false);
-                activeGladiator.upgradeLVL();
-                System.out.println(passiveGladiator.getName() + " dies. " + activeGladiator.getName() + " wins!");
+            checkWinningCondition(activeGladiator, passiveGladiator);
 
-            }
+
+        }
+    }
+
+    public void checkWinningCondition(Gladiator activeGladiator, Gladiator passiveGladiator) {
+        if (passiveGladiator.getCombatHP() <= 0) {
+            activeGladiator.setWinner(true);
+            passiveGladiator.setWinner(false);
+            activeGladiator.upgradeLVL();
+            System.out.println(passiveGladiator.getName() + " dies. " + activeGladiator.getName() + " wins!");
+
         } else {
             System.out.println(activeGladiator.getName() + " misses.");
         }
-
     }
 }

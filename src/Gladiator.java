@@ -6,7 +6,7 @@ public abstract class Gladiator {
     private double CombatHP;
     private boolean winner;
     private String name;
-    private String [] listNames = new String [] {"Attticus",
+    private String[] listNames = new String[]{"Attticus",
             "Augustus",
             "Brutus",
             "Cassius",
@@ -36,35 +36,35 @@ public abstract class Gladiator {
         this.winner = false;
     }
 
-    public String setName(){
+    public String setName() {
         int randIndex1 = (int) Math.floor(Math.random() * listNames.length);
-        return listNames[randIndex1]+ setRandomNumber();
+        return listNames[randIndex1] + setRandomNumber();
     }
 
     public String getName() {
         return name;
     }
 
-    public int setRandomNumber(){
-        return (int) Math.floor((Math.random() * 101) +1);
-
-    }
-    public void updateSP(double multiplier){
-        this.BaseSP = BaseSP*multiplier;
-    }
-
-    public void updateHP(double multiplier){
-        this.BaseHP = BaseHP *multiplier;
+    public int setRandomNumber() {
+        return (int) Math.floor((Math.random() * 101) + 1);
 
     }
 
-    public void updateDEX(double multiplier){
-        this.BaseDEX = BaseDEX*multiplier;
+    public void updateSP(double multiplier) {
+        this.BaseSP = BaseSP * multiplier;
+    }
+
+    public void updateHP(double multiplier) {
+        this.BaseHP = BaseHP * multiplier;
+
+    }
+
+    public void updateDEX(double multiplier) {
+        this.BaseDEX = BaseDEX * multiplier;
     }
 
     public String[] getStats() {
-        String [] gladiatorStats = new String [] {"HP " + this.BaseHP, "SP " +this.BaseSP, "DEX " + this.BaseDEX, "LVL " + this.LVL};
-        return gladiatorStats;
+        return new String[]{"HP " + this.BaseHP, "SP " + this.BaseSP, "DEX " + this.BaseDEX, "LVL " + this.LVL};
     };
 
     public double getCombatHP() {
@@ -75,20 +75,20 @@ public abstract class Gladiator {
         CombatHP = combatHP;
     }
 
-    public double getCurrentHP(){
+    public double getCurrentHP() {
         return BaseHP * LVL;
     }
 
-    public double getCurrentSP(){
-        return  BaseSP*LVL;
+    public double getCurrentSP() {
+        return BaseSP * LVL;
     }
 
     public double getDEX() {
         return BaseDEX;
     }
 
-    public void upgradeLVL(){
-        this.LVL +=1;
+    public void upgradeLVL() {
+        this.LVL += 1;
     }
 
     public boolean isWinner() {
