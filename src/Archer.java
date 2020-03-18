@@ -1,10 +1,9 @@
 public class Archer extends Gladiator {
-    public Archer() {
-        updateDEX( 1.25);
+    private double high = 1.25;
+    public Archer(String name, int max, int lvl) {
+        super(name, max, lvl);
+        updateDEX( high);
 
     }
-
-    @Override
-    public String getGladiatorType() {
-        return "Archer";}
 }
+

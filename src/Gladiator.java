@@ -1,82 +1,78 @@
+import java.util.Arrays;
+
 public abstract class Gladiator {
     private double BaseHP;
     private double BaseSP;
     private double BaseDEX;
+    private double CurrentHP;
     private double LVL;
-    private double CombatHP;
     private boolean winner;
     private String name;
-    private String[] listNames = new String[]{"Attticus",
-            "Augustus",
-            "Brutus",
-            "Cassius",
-            "Caton",
-            "Decimus",
-            "Flavius",
-            "Felix",
-            "Jupiter",
-            "Magnus",
-            "Marcellus",
-            "Maximus",
-            "Octavius",
-            "Romulus",
-            "Septimus",
-            "Severus",
-            "Spartacus",
-            "Thelonius",
-            "Tiberius",
-            "Titus"};
 
-    public Gladiator() {
-        this.BaseHP = setRandomNumber();
-        this.BaseSP = setRandomNumber();
-        this.BaseDEX = setRandomNumber();
-        this.LVL = setRandomNumber();
-        this.name = setName();
+
+    public Gladiator(String name, int max, int lvl) {
+        this.BaseHP = setRandomNumber(max);
+        this.BaseSP = setRandomNumber(max);
+        this.BaseDEX = setRandomNumber(max);
+        this.LVL = setRandomNumber(lvl);
+        this.name = name;
         this.winner = false;
     }
 
-    public String setName() {
-        int randIndex1 = (int) Math.floor(Math.random() * listNames.length);
-        return listNames[randIndex1] + setRandomNumber();
-    }
 
     public String getName() {
         return name;
     }
 
-    public int setRandomNumber() {
-        return (int) Math.floor((Math.random() * 101) + 1);
+    public int setRandomNumber(int max) {
+        return (int) Math.floor((Math.random() * max) + 1);
 
     }
 
     public void updateSP(double multiplier) {
+        if (multiplier <= 0) {
+            multiplier = 1;
+        }
+
         this.BaseSP = BaseSP * multiplier;
     }
 
     public void updateHP(double multiplier) {
+        if (multiplier <= 0) {
+            multiplier = 1;
+        }
         this.BaseHP = BaseHP * multiplier;
 
     }
 
     public void updateDEX(double multiplier) {
+
+        if (multiplier <= 0) {
+            multiplier = 1;
+        }
         this.BaseDEX = BaseDEX * multiplier;
     }
 
     public String[] getStats() {
         return new String[]{"HP " + this.BaseHP, "SP " + this.BaseSP, "DEX " + this.BaseDEX, "LVL " + this.LVL};
-    };
-
-    public double getCombatHP() {
-        return CombatHP;
     }
 
-    public void setCombatHP(double combatHP) {
-        CombatHP = combatHP;
+    ;
+
+    public double getCombatHP() {
+        return CurrentHP;
+    }
+
+    public void setCurrentHP() {
+        CurrentHP = BaseHP * LVL;
+    }
+
+    public void damageHP(double damage){
+        CurrentHP -=damage;
     }
 
     public double getCurrentHP() {
-        return BaseHP * LVL;
+        return CurrentHP;
     }
 
     public double getCurrentSP() {
@@ -99,5 +95,14 @@ public abstract class Gladiator {
         this.winner = winner;
     }
 
-    public abstract String getGladiatorType();
+    public String getGladiatorType() {
+
+        return this.getClass().getSimpleName();
+    }
+
+    public void printGladiator() {
+        System.out.println("Name: " + this.getName() + " type: " + this.getGladiatorType() + " stats: " +
+                Arrays.toString(this.getStats()));
+    }
 }
+

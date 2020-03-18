@@ -1,12 +1,11 @@
 public class Brutal extends Gladiator {
-    public Brutal() {
-        updateHP(1.25);
-        updateSP(1.25);
-        updateDEX(0.75);
+    private double low = 0.75;
+    private double high = 1.25;
+    public Brutal(String name, int max, int lvl) {
+        super(name, max, lvl);
+        updateHP(high);
+        updateSP(high);
+        updateDEX(low);
     }
 
-    @Override
-    public String getGladiatorType() {
-        return "Brutal";
-    }
 }

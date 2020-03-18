@@ -10,31 +10,32 @@ public class Combat {
         this.gladiator2 = gladiator2;
     }
 
-    public void simulateCombat(Combat combat, int i) {
+    public void simulateCombat( int i) {
+        gladiator1.setCurrentHP();
+        gladiator2.setCurrentHP();
+
         System.out.println("COMBAT no " + i);
-        combat.gladiator1.setCombatHP(combat.gladiator1.getCurrentHP());
-        combat.gladiator2.setCombatHP(combat.gladiator2.getCurrentHP());
-        while (combat.gladiator1.getCombatHP() > 0 && combat.gladiator2.getCombatHP() > 0) {
-            combatTurn(this);
+        while (this.gladiator1.getCurrentHP() > 0 && this.gladiator2.getCurrentHP() > 0) {
+            combatTurn();
 
         }
     }
 
-    public void combatTurn(Combat combat) {
-        attackOrMiss(combat.gladiator1, combat.gladiator2);
-        if (combat.gladiator2.getCombatHP() > 0) {
-            attackOrMiss(combat.gladiator2, combat.gladiator1);
+    public void combatTurn() {
+        attackOrMiss(this.gladiator1, this.gladiator2);
+        if (this.gladiator2.getCurrentHP() > 0) {
+            attackOrMiss(this.gladiator2, this.gladiator1);
         }
     }
 
     public void attackOrMiss(Gladiator activeGladiator, Gladiator passiveGladiator) {
         double chance = activeGladiator.getDEX();
-        double random = Math.floor((Math.random() * 101) + 1);
+        double random = Math.floor((Math.random() * 21) + 1);
         if (random <= chance) {
             Random r = new Random();
             double damageMultiplier = (r.nextInt(5)) / 10.0 + 0.1;
             double dmg = Math.floor(damageMultiplier * activeGladiator.getCurrentSP());
-            passiveGladiator.setCombatHP(passiveGladiator.getCombatHP() - dmg);
+            passiveGladiator.damageHP(dmg);
             System.out.println(activeGladiator.getName() + " attacks at " + dmg + " dmg.");
             checkWinningCondition(activeGladiator, passiveGladiator);
 
@@ -43,7 +44,7 @@ public class Combat {
     }
 
     public void checkWinningCondition(Gladiator activeGladiator, Gladiator passiveGladiator) {
-        if (passiveGladiator.getCombatHP() <= 0) {
+        if (passiveGladiator.getCurrentHP() <= 0) {
             activeGladiator.setWinner(true);
             passiveGladiator.setWinner(false);
             activeGladiator.upgradeLVL();

@@ -1,10 +1,7 @@
 public class Swordsman extends Gladiator {
-    public Swordsman() {
+    public Swordsman(String name, int max, int lvl) {
+        super(name, max, lvl);
     }
 
-    @Override
-    public String getGladiatorType() {
-        return "Swordsman";
-    }
 
 }

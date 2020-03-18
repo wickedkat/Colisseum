@@ -1,2 +1,11 @@
 # Project exclude paths
 /out/
+.idea
+
+
+*.iws
+cmake-build-*/
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties

@@ -1,12 +1,11 @@
 public class Assasin extends Gladiator {
-    public Assasin() {
-        updateHP(0.75);
-        updateSP(1.25);
-        updateDEX(1.25);
+    private double low = 0.75;
+    private double high = 1.25;
+    public Assasin(String name, int max, int lvl) {
+        super(name, max, lvl);
+        updateHP(low);
+        updateSP(high);
+        updateDEX(high);
     }
 
-    @Override
-    public String getGladiatorType() {
-        return "Assasin";
-    }
 }

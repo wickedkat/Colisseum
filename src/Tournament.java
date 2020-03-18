@@ -1,115 +1,98 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Tournament {
-    List<List<Combat>> allCombats = new ArrayList<>();
+    List<Combat> allCombats = new ArrayList<>();
     List<Gladiator> allGladiators = new ArrayList<>();
     private int stages;
+    List<String> listFullNames = new ArrayList<>();
+    private String[] listNames = new String[]{"Attticus",
+            "Augustus", "Brutus", "Cassius",
+            "Caton", "Decimus", "Flavius",
+            "Felix", "Jupiter", "Magnus",
+            "Marcellus", "Maximus", "Octavius",
+            "Romulus", "Septimus", "Severus",
+            "Spartacus", "Thelonius", "Tiberius",
+            "Titus", "Amulius", "Cantius",
+            "Gemellus", "Tullus", "Opsius",
+            "Photius", "Flavius", "Papinius",
+            "Pompolussa", "Floronius", "Donicus",
+            "Vopiscus", "Antonius", "Acilianus",
+            "Placus", "Lusius", "Fastidius",
+            "Opiter", "Vagennius", "Caius",
+            "Pomptinus", "Remus", "Hostus",
+            "Laetorius", "Flaccus", "Tertius"};
 
     public Tournament(int stages) {
         this.stages = stages;
-    }
-
-    public void createAndExecuteCombats(int stages) {
-        System.out.println("COMBATS STAGE 1");
-        System.out.println("");
-        List<Combat> firstStageList = new ArrayList<>();
+        createGladiators(101,21);
         double stageCombats = Math.pow(2, stages - 1);
-        createFirstStageCombats(allGladiators, firstStageList, stageCombats);
-        allCombats.add(firstStageList);
-        executeCombats(firstStageList);
-        stageCombats /= 2;
-        for (int i = 1; i < stages; i++) {
-            System.out.println(" ");
-            System.out.println("COMBATS STAGE " + (i + 1));
-            System.out.println("");
-            List<Combat> stageList = new ArrayList<>();
-            createStageCombats(stageCombats, stageList, createWinnersList());
-            allCombats.add(stageList);
-            executeCombats(stageList);
-            if (stageCombats > 1) {
-                stageCombats /= 2;
-            }
-        }
+        createStageCombats(allGladiators,allCombats, stageCombats);
     }
 
-    public void createFirstStageCombats(List<Gladiator> allGladiators, List<Combat> stageList, double stageCombats) {
-        int j = 0;
-        for (int i = 0; i < stageCombats; i++) {
-            stageList.add(new Combat(allGladiators.get(j), allGladiators.get(j + 1)));
-            if (j < allGladiators.size()) {
-                j += 2;
-            }
-
-        }
-
-    }
-
-    public void createStageCombats(double stageCombats, List<Combat> stageList, List<Gladiator> winnersList) {
-        int j = 0;
-        for (int i = 0; i < stageCombats; i++) {
-            stageList.add(new Combat(winnersList.get(j), winnersList.get(j + 1)));
-            if (j < winnersList.size()) {
-                j += 2;
-            }
-        }
-    }
-
-    public void executeCombats(List<Combat> stagelist){
-        int combatNumber = 1;
-        for (Combat combat : stagelist
-        ) {
-            combat.simulateCombat(combat, combatNumber);
-            combatNumber += 1;
-
-        }
-    }
-
-    public void createGladiators() {
-        int gladiatorsNumber = (int) Math.pow(2, (double) stages);
-        for (int i = 0; i < gladiatorsNumber; i++) {
-            int gladiatorType = (int) Math.floor((Math.random() * 4) + 1);
-            switch (gladiatorType) {
-                case 1:
-                    allGladiators.add(new Swordsman());
-                    break;
-                case 2:
-                    allGladiators.add(new Archer());
-                    break;
-                case 3:
-                    allGladiators.add(new Assasin());
-                    break;
-                case 4:
-                    allGladiators.add(new Brutal());
-                    break;
-            }
-        }
-        printGladiators(this);
-    }
-
-    public void printGladiators(Tournament tournament) {
-        System.out.println("These are " + tournament.getAllGladiators().size() + " GLADIATORS fighting in the tournament: ");
-        for (Gladiator gladiator : tournament.getAllGladiators()
-        ) {
-            System.out.println("Name: " + gladiator.getName() + " type: " + gladiator.getGladiatorType() + " stats: " +
-                    Arrays.toString(gladiator.getStats()));
-
-        }
-
+    public List<Combat> getAllCombats() {
+        return allCombats;
     }
 
     public List<Gladiator> getAllGladiators() {
         return allGladiators;
     }
 
-    public void simulateTournament(int stages) {
-        createGladiators();
-        createAndExecuteCombats(stages);
-        printTheWinner(createWinnersList());
+    public int getStages() {
+        return stages;
+    }
+
+    public String setName() {
+        int randIndex1 = (int) Math.floor(Math.random() * listNames.length);
+        int randIndex2 = (int) Math.floor(Math.random() * listNames.length);
+        String gladiatorName = listNames[randIndex1] + " " + listNames[randIndex2];
+        while (listFullNames.contains(gladiatorName)) {
+            gladiatorName = listNames[randIndex1 - 1] + " " + listNames[randIndex2 + 1];
+            listFullNames.add(gladiatorName);
+        }
+        listFullNames.add(gladiatorName);
+        return gladiatorName;
 
     }
 
+    public int setRandomNumber(int max) {
+        return (int) Math.floor((Math.random() * max) + 1);
+
+    }
+
+    public void createGladiators(int maxStat, int maxLvl) {
+        int gladiatorsNumber = (int) Math.pow(2, (double) stages);
+        for (int i = 0; i < gladiatorsNumber; i++) {
+            int gladiatorType = (int) Math.floor((Math.random() * 4) + 1);
+            switch (gladiatorType) {
+                case 1:
+                    allGladiators.add(new Swordsman(setName(), maxStat + 1, maxLvl + 1));
+                    break;
+                case 2:
+                    allGladiators.add(new Archer(setName(), maxStat + 1, maxLvl + 1));
+                    break;
+                case 3:
+                    allGladiators.add(new Assasin(setName(), maxStat + 1, maxLvl + 1));
+                    break;
+                case 4:
+                    allGladiators.add(new Brutal(setName(), maxStat + 1, maxLvl + 1));
+                    break;
+            }
+        }
+
+
+    }
+
+    public void createStageCombats(List<Gladiator> listGladiators, List<Combat> stageCombatList, double combatsInStage) {
+        int j = 0;
+        for (int i = 0; i < combatsInStage; i++) {
+            stageCombatList.add(new Combat(listGladiators.get(j), listGladiators.get(j + 1)));
+            if (j < listGladiators.size()) {
+                j += 2;
+            }
+
+        }
+}
     public List<Gladiator> createWinnersList() {
         List<Gladiator> winnersList = new ArrayList<>();
         for (Gladiator gladiator : getAllGladiators()
@@ -120,12 +103,4 @@ public class Tournament {
 
         }
         return winnersList;
-
-
-    }
-    public void printTheWinner(List<Gladiator> winnerList){
-        Gladiator winner = winnerList.get(0);
-        System.out.println(winner.getName() + " WINS THE TOURNAMENT!!!");
-
-    }
-}
+}}

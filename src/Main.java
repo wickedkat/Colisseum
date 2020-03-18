@@ -4,12 +4,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Colisseum! How many stages of the Tournament do you wish to watch?");
-        String stages = scanner.nextLine();
+        String stagesUserInput = scanner.nextLine();
+        int stages = Integer.parseInt(stagesUserInput);
 
-        Tournament tournament = new Tournament(Integer.parseInt(stages));
-        tournament.simulateTournament(Integer.parseInt(stages));
-
-
+        Simulation simulation = new Simulation(stages);
+        simulation.simulateTournament();
 
     }
 }
